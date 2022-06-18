@@ -111,7 +111,33 @@ const handleReset= () => {
   });
 };
 
+// FILTERING
 
+useEffect(() => {
+  db.collection("users")
+    .where("category", "==", category)
+    .get()
+    .then((snapshot) => {
+      let data = [];
+      snapshot.forEach((doc) => {
+        data.push({
+          ...doc.data(),
+          id: doc.id,
+        });
+        return data;
+      });
+
+      setCourses(data);
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+}, [category]);
+
+return courses;
+}
+
+const courses = useCourses();
 
 
 
@@ -209,7 +235,12 @@ const handleReset= () => {
     
 
 
- 
+
+
+
+
+{/* FILTERING */}
+<label className="border-2 m-2">masaya O malungkot?</label>
 
 
 
@@ -300,7 +331,7 @@ const handleReset= () => {
 
 
   );
-}
+
 
 export default App;
 
